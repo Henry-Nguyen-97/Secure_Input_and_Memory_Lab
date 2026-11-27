@@ -1,16 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "session.h"
 
-session_t *session_create(char *username)
+session_t *session_create(const char *username)
 {
     session_t *session = NULL;
+
+    if (username == NULL)
+        return NULL;
 
     session = malloc(sizeof(session_t));
     if (session == NULL)
         return NULL;
 
-    session->user = username;
+    session->user = malloc(strlen(username) + 1);
+    if (session->user == NULL)
+    {
+        free(session);
+        return NULL;
+    }
+
+    strcpy(session->user, username);
     session->access_level = 1;
 
     return session;
