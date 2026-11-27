@@ -28,6 +28,7 @@ int main(void)
     session_print(session);
     session_destroy(session);
 
+    /* main still owns username (the session kept its own copy). */
     printf("Goodbye %s\n", username);
 
     free(username);
